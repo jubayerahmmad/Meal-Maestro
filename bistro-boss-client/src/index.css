@@ -3,7 +3,28 @@
 @tailwind utilities;
 
 .featured-item {
+  position: relative; /* Ensure the pseudo-element positions correctly */
   background-image: url("./assets/home/featured.jpg");
   background-size: cover;
   background-repeat: no-repeat;
+  display: flex;
+  align-items: center;
+  /* justify-content: center; Optional: centers content within the item */
+  overflow: hidden; /* Ensures no overflow from pseudo-element */
+}
+
+.featured-item::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.6); /* Adjust opacity as needed */
+  z-index: 1; /* Ensures it appears below the content but above the background */
+}
+
+.featured-item > * {
+  position: relative; /* Keeps content above the overlay */
+  z-index: 2;
 }

@@ -1,10 +1,9 @@
 import SectionTitle from "../../../../components/SectiontTtle/SectionTitle";
 import featuredImg from "../../../../assets/home/featured.jpg";
-import "../../../../index.css";
 
 const Featured = () => {
   return (
-    <section className="featured-item bg-fixed h-[600px] flex flex-col items-center justify-center my-12">
+    <section className="featured-item text-white bg-fixed h-[600px] flex flex-col items-center justify-center my-12">
       <SectionTitle
         subHeading={"Check it Out"}
         heading={"Featured items"}
@@ -21,7 +20,9 @@ const Featured = () => {
             Explore our featured items and indulge in a culinary journey that
             will leave you wanting more.
           </p>
-          <button className="btn">Read More</button>
+          <button className="px-3 py-2 border-b-2 font-bold border-b-white rounded-md">
+            Read More
+          </button>
         </div>
       </div>
     </section>
