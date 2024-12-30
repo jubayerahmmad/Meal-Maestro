@@ -1,6 +1,33 @@
+@import url("https://fonts.googleapis.com/css2?family=Playfair+Display+SC:ital,wght@0,400;0,700;0,900;1,400;1,700;1,900&family=Space+Grotesk:wght@300..700&display=swap");
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+* {
+  box-sizing: border-box;
+}
+
+h1,
+h2,
+h3,
+li {
+  font-family: "Playfair Display SC", serif;
+}
+p,
+span,
+button,
+a {
+  font-family: "Space Grotesk", serif;
+}
+
+li:hover {
+  color: rgb(255, 123, 0);
+}
+
+.active {
+  color: rgb(255, 123, 0);
+}
 
 .featured-item {
   position: relative; /* Ensure the pseudo-element positions correctly */

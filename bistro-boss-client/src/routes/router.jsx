@@ -1,8 +1,14 @@
+// import React from "react";
+// import MainLayout from "../Layouts/MainLayout";
+// import Home from "../pages/Home/Home/Home";
+// import Menu from "../pages/Menu/Menu";
+// import Order from "../pages/Order/Order";
+import { lazy } from "react";
 import { createBrowserRouter } from "react-router-dom";
-import MainLayout from "../Layouts/MainLayout";
-import Home from "../pages/Home/Home/Home";
-import Menu from "../pages/Menu/Menu";
-import Order from "../pages/Order/Order";
+const MainLayout = lazy(() => import("../Layouts/MainLayout"));
+const Home = lazy(() => import("../pages/Home/Home/Home"));
+const Menu = lazy(() => import("../pages/Menu/Menu"));
+const Order = lazy(() => import("../pages/Order/Order"));
 
 export const router = createBrowserRouter([
   {
@@ -18,7 +24,7 @@ export const router = createBrowserRouter([
         element: <Menu></Menu>,
       },
       {
-        path: "/order",
+        path: "/order/:category",
         element: <Order></Order>,
       },
     ],

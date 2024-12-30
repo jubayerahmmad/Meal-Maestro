@@ -1,4 +1,4 @@
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 
 const Navbar = () => {
   const navOptions = (
@@ -10,13 +10,13 @@ const Navbar = () => {
         <NavLink to="/menu">Menu</NavLink>
       </li>
       <li>
-        <NavLink to="/order">Order</NavLink>
+        <NavLink to="/order/salads">Order</NavLink>
       </li>
     </>
   );
   return (
-    <div className="fixed w-full z-50 bg-opacity-20 text-white bg-black">
-      <div className="navbar w-10/12 mx-auto px-6">
+    <div className="fixed w-full z-50 bg-opacity-60 text-white bg-black">
+      <div className="navbar lg:w-10/12 mx-auto px-6">
         <div className="navbar-start">
           <div className="dropdown">
             <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
@@ -37,20 +37,24 @@ const Navbar = () => {
             </div>
             <ul
               tabIndex={0}
-              className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow"
+              className="gap-4 px-2 py-1 text-black flex flex-col font-semibold dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-56 shadow"
             >
               {navOptions}
             </ul>
           </div>
-          <a className="btn btn-ghost text-xl">MEAL MAESTRO</a>
+          <Link to={"/"} className="btn btn-ghost text-base lg:text-2xl">
+            MEAL MAESTRO
+          </Link>
         </div>
         <div className="navbar-center hidden lg:flex">
-          <ul className="menu menu-horizontal px-1 text-2xl gap-2">
+          <ul className="text-3xl gap-10 px-4 py-2 flex font-semibold rounded-md">
             {navOptions}
           </ul>
         </div>
         <div className="navbar-end">
-          <a className="btn">Button</a>
+          <a className="btn btn-sm lg:btn-md text-white bg-orange-600 border-none hover:bg-orange-800">
+            Login/Register
+          </a>
         </div>
       </div>
     </div>

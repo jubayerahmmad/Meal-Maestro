@@ -14,7 +14,7 @@ import { FaQuoteRight } from "react-icons/fa6";
 const Testimonial = () => {
   const [reviews, setReviews] = useState([]);
   useEffect(() => {
-    fetch("reviews.json")
+    fetch("http://localhost:5000/reviews")
       .then((res) => res.json())
       .then((data) => {
         setReviews(data);
@@ -38,7 +38,7 @@ const Testimonial = () => {
                 />
               </div>
 
-              <div className="mx-auto flex flex-col items-center p-16 text-center">
+              <div className="mx-auto flex flex-col items-center lg:p-16 text-center">
                 <FaQuoteRight size={96} />
 
                 <p>{review.details}</p>
