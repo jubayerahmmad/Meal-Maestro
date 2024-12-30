@@ -29,9 +29,23 @@ async function run() {
     console.log(
       "Pinged your deployment. You successfully connected to MongoDB!"
     );
+    const db = client.db("maestroDB");
+    const menuCollection = db.collection("menus");
+    const reviewsCollection = db.collection("reviews");
+
+    // get menu data
+    app.get("/menus", async (req, res) => {
+      const result = await menuCollection.find().toArray();
+      res.send(result);
+    });
+    // get reviews data
+    app.get("/reviews", async (req, res) => {
+      const result = await reviewsCollection.find().toArray();
+      res.send(result);
+    });
   } finally {
     // Ensures that the client will close when you finish/error
-    await client.close();
+    // await client.close();
   }
 }
 run().catch(console.dir);
