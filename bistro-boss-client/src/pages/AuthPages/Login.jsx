@@ -1,15 +1,18 @@
 import { useEffect, useRef, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import {
   loadCaptchaEnginge,
   LoadCanvasTemplate,
   validateCaptcha,
 } from "react-simple-captcha";
 import useAuth from "../../hooks/useAuth";
+import { Helmet } from "react-helmet-async";
+import { toast } from "react-toastify";
 
 const Login = () => {
   const [disableLogin, setDisableLogin] = useState(true);
-  const { createUser } = useAuth();
+  const { loginUser } = useAuth();
+  const navigate = useNavigate();
   const captchaRef = useRef();
   useEffect(() => {
     loadCaptchaEnginge(6);
@@ -21,10 +24,12 @@ const Login = () => {
     const form = e.target;
     const email = form.email.value;
     const password = form.password.value;
-    // console.log(email, password);
-    createUser(email, password)
+    console.log(email, password);
+    loginUser(email, password)
       .then((result) => {
         console.log(result);
+        navigate("/");
+        toast.success("Login Successful");
       })
       .catch((error) => {
         console.log(error);
@@ -40,6 +45,9 @@ const Login = () => {
   };
   return (
     <div className="min-h-screen flex justify-center items-center">
+      <Helmet>
+        <title>Login - Meal Maestro</title>
+      </Helmet>
       <div
         className={`w-[90%] md:w-[80%] lg:w-[35%] bg-[#fffefd] border-2 rounded-lg transition-all duration-300 mx-auto`}
       >
@@ -65,17 +73,13 @@ const Login = () => {
           </div>
 
           <div>
-            <label
-              htmlFor="password"
-              className="text-[1rem] font-[500] text-[#464646]"
-            >
+            <label className="text-[1rem] font-[500] text-[#464646]">
               Password
             </label>
             <input
               type="password"
               name="password"
-              id="password"
-              placeholder="**********"
+              placeholder="Password"
               className="py-2 px-3 border border-[#d1d1d1] rounded-md w-full focus:outline-none mt-1 focus:border-[#3B9DF8]"
             />
           </div>
@@ -93,12 +97,12 @@ const Login = () => {
             <input
               type="text"
               name="captcha"
-              id="password"
               ref={captchaRef}
               placeholder="Type The Captcha above"
               className="py-2 px-3 border border-[#d1d1d1] rounded-md w-full focus:outline-none mt-1 focus:border-[#3B9DF8]"
             />
             <button
+              type="button"
               onClick={handleValidateCaptcha}
               className="btn btn-xs w-fit my-2"
             >

@@ -1,6 +1,9 @@
 import { Link, NavLink } from "react-router-dom";
+import useAuth from "../hooks/useAuth";
+import { toast } from "react-toastify";
 
 const Navbar = () => {
+  const { user, logoutUser } = useAuth();
   const navOptions = (
     <>
       <li>
@@ -14,6 +17,13 @@ const Navbar = () => {
       </li>
     </>
   );
+
+  const handleLogout = () => {
+    logoutUser().then(() => {
+      toast.success("User Logged Out");
+    });
+  };
+
   return (
     <div className="fixed w-full z-50 bg-opacity-60 text-white bg-black">
       <div className="navbar lg:w-10/12 mx-auto px-6">
@@ -52,18 +62,31 @@ const Navbar = () => {
           </ul>
         </div>
         <div className="navbar-end gap-2">
-          <Link
-            to="/login"
-            className="btn btn-sm lg:btn-md text-white bg-orange-600 hover:bg-orange-700 border-none"
-          >
-            Login
-          </Link>
-          <Link
-            to="/register"
-            className="btn btn-sm lg:btn-md btn-outline text-orange-600 hover:border-orange-600 hover:bg-orange-600"
-          >
-            Register
-          </Link>
+          {user ? (
+            <>
+              <button
+                onClick={handleLogout}
+                className="btn btn-sm lg:btn-md text-white bg-orange-600 hover:bg-orange-700 border-none"
+              >
+                Log Out
+              </button>
+            </>
+          ) : (
+            <>
+              <Link
+                to="/login"
+                className="btn btn-sm lg:btn-md text-white bg-orange-600 hover:bg-orange-700 border-none"
+              >
+                Login
+              </Link>
+              <Link
+                to="/register"
+                className="btn btn-sm lg:btn-md btn-outline text-orange-600 hover:border-orange-600 hover:bg-orange-600"
+              >
+                Register
+              </Link>
+            </>
+          )}
         </div>
       </div>
     </div>
