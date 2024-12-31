@@ -51,10 +51,19 @@ const Navbar = () => {
             {navOptions}
           </ul>
         </div>
-        <div className="navbar-end">
-          <a className="btn btn-sm lg:btn-md text-white bg-orange-600 border-none hover:bg-orange-800">
-            Login/Register
-          </a>
+        <div className="navbar-end gap-2">
+          <Link
+            to="/login"
+            className="btn btn-sm lg:btn-md text-white bg-orange-600 hover:bg-orange-700 border-none"
+          >
+            Login
+          </Link>
+          <Link
+            to="/register"
+            className="btn btn-sm lg:btn-md btn-outline text-orange-600 hover:border-orange-600 hover:bg-orange-600"
+          >
+            Register
+          </Link>
         </div>
       </div>
     </div>

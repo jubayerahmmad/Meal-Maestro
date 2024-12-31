@@ -5,6 +5,8 @@
 // import Order from "../pages/Order/Order";
 import { lazy } from "react";
 import { createBrowserRouter } from "react-router-dom";
+import Login from "../pages/AuthPages/Login";
+import Register from "../pages/AuthPages/Register";
 const MainLayout = lazy(() => import("../Layouts/MainLayout"));
 const Home = lazy(() => import("../pages/Home/Home/Home"));
 const Menu = lazy(() => import("../pages/Menu/Menu"));
@@ -28,5 +30,13 @@ export const router = createBrowserRouter([
         element: <Order></Order>,
       },
     ],
+  },
+  {
+    path: "/login",
+    element: <Login></Login>,
+  },
+  {
+    path: "/register",
+    element: <Register></Register>,
   },
 ]);
