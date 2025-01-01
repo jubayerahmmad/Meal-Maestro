@@ -4,9 +4,10 @@ import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
 import useAuth from "../../hooks/useAuth";
 import { toast } from "react-toastify";
+import axios from "axios";
 
 const Register = () => {
-  const { createUser } = useAuth();
+  const { createUser, updateUser } = useAuth();
   const navigate = useNavigate();
   const {
     register,
@@ -15,13 +16,38 @@ const Register = () => {
     formState: { errors },
   } = useForm();
 
-  const onSubmit = (data) => {
-    console.log(data);
-    createUser(data.email, data.password).then((result) => {
-      console.log(result);
-      toast.success("User Registration Successful");
-      navigate("/");
-    });
+  const onSubmit = async (data) => {
+    const photo = data.photoURL[0];
+    // return console.log(photo);
+    const formData = new FormData();
+    formData.append("image", photo); // object key must be: "image"
+
+    //send data to imgbb
+    const { data: imgData } = await axios.post(
+      `https://api.imgbb.com/1/upload?key=${
+        import.meta.env.VITE_IMGBB_API_KEY
+      }`,
+      formData
+    );
+    // return console.log(imgData.data.display_url, data.name);
+    const userInfo = {
+      displaName: data.name,
+      photoURL: imgData.data.display_url,
+    };
+    createUser(data.email, data.password)
+      .then(() => {
+        updateUser(userInfo)
+          .then(() => {
+            toast.success("User Registration Successful");
+            navigate("/");
+          })
+          .catch((err) => {
+            console.log(err.message);
+          });
+      })
+      .catch((err) => {
+        console.log(err.message);
+      });
     reset();
   };
   return (
@@ -40,6 +66,7 @@ const Register = () => {
           onSubmit={handleSubmit(onSubmit)}
           className="flex flex-col gap-5 p-4"
         >
+          {/* name */}
           <div>
             <label className="text-[1rem] font-[500] text-[#464646]">
               Name
@@ -47,7 +74,7 @@ const Register = () => {
             <input
               type="text"
               {...register("name", { required: true })}
-              placeholder="zenuilibrary@gmail.com"
+              placeholder="Name"
               className="py-2 px-3 border border-orange-200 rounded-md w-full focus:outline-none mt-1 focus:border-orange-600"
             />
             {errors.name && (
@@ -56,6 +83,7 @@ const Register = () => {
               </span>
             )}
           </div>
+          {/* email */}
           <div>
             <label className="text-[1rem] font-[500] text-[#464646]">
               Email
@@ -73,6 +101,7 @@ const Register = () => {
             )}
           </div>
 
+          {/* password */}
           <div>
             <label className="text-[1rem] font-[500] text-[#464646]">
               Password
@@ -97,6 +126,25 @@ const Register = () => {
             {errors.password && (
               <span className="text-red-500 font-bold">
                 {errors.password.message}
+              </span>
+            )}
+          </div>
+          {/* photo */}
+          <div>
+            <label className="text-[1rem] font-[500] text-[#464646]">
+              Upload Image
+            </label>
+            <input
+              type="file"
+              {...register("photoURL", {
+                required: "Image is required",
+              })}
+              placeholder="Choose Image"
+              className="py-2 px-3 border border-orange-200 rounded-md w-full focus:outline-none mt-1 focus:border-orange-600"
+            />
+            {errors.photoURL && (
+              <span className="text-red-500 font-bold">
+                {errors.photoURL.message}
               </span>
             )}
           </div>
