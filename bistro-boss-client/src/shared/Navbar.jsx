@@ -2,9 +2,11 @@ import { Link, NavLink } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
 import { toast } from "react-toastify";
 import { FaShoppingCart } from "react-icons/fa";
+import useCart from "../hooks/useCart";
 
 const Navbar = () => {
   const { user, logoutUser } = useAuth();
+  const [cart] = useCart();
   const navOptions = (
     <>
       <li>
@@ -68,7 +70,7 @@ const Navbar = () => {
               <FaShoppingCart size={36}></FaShoppingCart>
             </button>
             <span className="badge badge-secondary badge-sm absolute -right-2 -top-1">
-              0
+              {cart.length}
             </span>
           </Link>
           {user ? (
