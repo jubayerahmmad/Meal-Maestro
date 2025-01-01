@@ -1,41 +1,50 @@
 import React from "react";
 
 const Loader = () => {
-  const spinnerDivs = Array.from({ length: 10 }).map((_, index) => {
-    const delay = (index + 1) * 0.1;
-    const rotation = (index + 1) * 36;
-    const translation = 150;
-
-    return (
-      <div
-        key={index}
-        className="absolute w-[50%] h-[140%] bg-primary"
-        style={{
-          "--delay": delay,
-          "--rotation": rotation,
-          "--translation": translation,
-          transform: `rotate(calc(var(--rotation) * 1deg)) translate(0, calc(var(--translation) * 1%))`,
-          animation: `spinner-animation 1s calc(var(--delay) * 1s) infinite ease`,
-        }}
-      ></div>
-    );
-  });
+  const sharedStyle = {
+    content: "",
+    width: "100%",
+    height: "100%",
+    display: "block",
+    border: "5.6px solid #3B9DF8",
+    borderRadius: "50%",
+    boxShadow: "0 -33.6px 0 -5.6px #3B9DF8",
+    position: "absolute",
+    animation: "spinner-rotate 1.25s infinite ease",
+  };
 
   return (
-    <div className="absolute w-[9px] h-[9px]">
-      {spinnerDivs}
-      <style>
-        {`
-                @keyframes spinner-animation {
-                0%, 10%, 20%, 30%, 50%, 60%, 70%, 80%, 90%, 100% {
-                transform: rotate(calc(var(--rotation) * 1deg)) translate(0, calc(var(--translation) * 1%));
-               }
-               50% {
-                transform: rotate(calc(var(--rotation) * 1deg)) translate(0, calc(var(--translation) * 1.5%));
-               }
-              }
-            `}
-      </style>
+    <div className="min-h-screen flex justify-center items-center">
+      <div className="relative w-[22.4px] h-[22.4px]">
+        <div
+          style={{
+            ...sharedStyle,
+            animation:
+              "spinner-b4c8mmmd 0.5s backwards, spinner-rotate 1.25s 0.5s infinite ease",
+          }}
+        ></div>
+        <div
+          style={{
+            ...sharedStyle,
+            animationDelay: "0s, 1.25s",
+          }}
+        ></div>
+        <style>
+          {`
+          @keyframes spinner-b4c8mmmd {
+            from {
+              box-shadow: 0 0 0 -5.6px #474bff;
+            }
+          }
+
+          @keyframes spinner-rotate {
+            to {
+              transform: rotate(360deg);
+            }
+          }
+        `}
+        </style>
+      </div>
     </div>
   );
 };

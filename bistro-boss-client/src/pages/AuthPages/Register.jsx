@@ -1,13 +1,14 @@
-import React from "react";
 import { Helmet } from "react-helmet-async";
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
 import useAuth from "../../hooks/useAuth";
 import { toast } from "react-toastify";
 import axios from "axios";
+import { TbFidgetSpinner } from "react-icons/tb";
 
 const Register = () => {
-  const { createUser, updateUser } = useAuth();
+  const { createUser, updateUser, loading, setLoading } = useAuth();
+
   const navigate = useNavigate();
   const {
     register,
@@ -17,6 +18,7 @@ const Register = () => {
   } = useForm();
 
   const onSubmit = async (data) => {
+    setLoading(true);
     const photo = data.photoURL[0];
     // return console.log(photo);
     const formData = new FormData();
@@ -153,7 +155,15 @@ const Register = () => {
             type="submit"
             className="py-2 px-4 w-full bg-[#3B9DF8] text-[#fff] rounded-md"
           >
-            Register
+            {loading ? (
+              <TbFidgetSpinner
+                size={20}
+                className="animate-spin mx-auto"
+                color="white"
+              ></TbFidgetSpinner>
+            ) : (
+              "Register"
+            )}
           </button>
         </form>
 

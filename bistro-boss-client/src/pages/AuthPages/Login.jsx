@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import {
   loadCaptchaEnginge,
   LoadCanvasTemplate,
@@ -11,6 +11,8 @@ import { toast } from "react-toastify";
 
 const Login = () => {
   const [disableLogin, setDisableLogin] = useState(true);
+  const { state } = useLocation();
+
   const { loginUser } = useAuth();
   const navigate = useNavigate();
   const captchaRef = useRef();
@@ -28,7 +30,7 @@ const Login = () => {
     loginUser(email, password)
       .then((result) => {
         console.log(result);
-        navigate("/");
+        navigate(`${state ? state : "/"}`);
         toast.success("Login Successful");
       })
       .catch((error) => {
