@@ -12,6 +12,7 @@ import { toast } from "react-toastify";
 const Login = () => {
   const [disableLogin, setDisableLogin] = useState(true);
   const { state } = useLocation();
+  // console.log(state);
 
   const { loginUser } = useAuth();
   const navigate = useNavigate();

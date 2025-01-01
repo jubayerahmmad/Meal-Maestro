@@ -41,7 +41,7 @@ const AuthProvider = ({ children }) => {
     const unSub = onAuthStateChanged(auth, (currentUser) => {
       if (currentUser) {
         setUser(currentUser);
-        console.log("current user", currentUser);
+        // console.log("current user", currentUser);
       } else {
         setUser(null);
       }

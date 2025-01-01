@@ -32,11 +32,7 @@ export const router = createBrowserRouter([
       },
       {
         path: "/order/:category",
-        element: (
-          <PrivateRoute>
-            <Order></Order>
-          </PrivateRoute>
-        ),
+        element: <Order></Order>,
       },
     ],
   },
