@@ -35,16 +35,18 @@ const Cart = () => {
   };
 
   return (
-    <div className="w-10/12 mx-auto">
+    <div className="lg:w-10/12 mx-auto">
       <SectionTitle
         heading={"Wanna Add more?"}
         subHeading={"My Cart"}
       ></SectionTitle>
 
-      <div className="flex items-center justify-between my-6 text-3xl">
+      <div className="flex items-center justify-between my-6 text-sm lg:text-3xl">
         <h3>Total Orders: {cart.length}</h3>
         <h3>Total Price : $ {totalPrice}</h3>
-        <button className="btn btn-warning text-white">Pay</button>
+        <button className="btn btn-sm lg:btn-md btn-warning text-white">
+          Pay
+        </button>
       </div>
 
       <div className="">
