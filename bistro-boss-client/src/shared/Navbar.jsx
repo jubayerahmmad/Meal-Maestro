@@ -65,7 +65,7 @@ const Navbar = () => {
           </ul>
         </div>
         <div className="navbar-end gap-2 items-center">
-          <Link className="rounded-full relative mx-2">
+          <Link to="dashboard/cart" className="rounded-full relative mx-2">
             <button>
               <FaShoppingCart size={36}></FaShoppingCart>
             </button>

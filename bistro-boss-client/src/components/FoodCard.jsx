@@ -3,15 +3,18 @@ import useAuth from "../hooks/useAuth";
 import { useLocation, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import useAxiosSecure from "../hooks/useAxiosSecure";
+import useCart from "../hooks/useCart";
 
 const FoodCard = ({ item }) => {
   const { user } = useAuth();
+  const [, refetch] = useCart();
   const { name, image, recipe, price, _id } = item;
+
   const navigate = useNavigate();
   const { pathname } = useLocation();
   const axiosSecure = useAxiosSecure();
 
-  const handleAddToCart = (foodItem) => {
+  const handleAddToCart = () => {
     // console.log(foodItem);
     if (user && user.email) {
       // save order details
@@ -28,6 +31,8 @@ const FoodCard = ({ item }) => {
         if (res.data.insertedId) {
           toast.success(`${name} added to the Cart`);
         }
+        //refetch the cart to show cart item count
+        refetch();
       });
     } else {
       Swal.fire({
@@ -59,7 +64,7 @@ const FoodCard = ({ item }) => {
         <p className="text-sm">{recipe}</p>
         <div className="mt-3">
           <button
-            onClick={() => handleAddToCart(item)}
+            onClick={handleAddToCart}
             className="btn btn-outline text-orange-600 bg-gray-200 hover:bg-orange-600 hover:border-none"
           >
             Add to Cart

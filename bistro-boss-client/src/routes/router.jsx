@@ -8,6 +8,8 @@ import { createBrowserRouter } from "react-router-dom";
 import Login from "../pages/AuthPages/Login";
 import Register from "../pages/AuthPages/Register";
 import PrivateRoute from "./PrivateRoute";
+import Dashboard from "../Layouts/Dashboard";
+import Cart from "../pages/Dashboard/Cart/Cart";
 const MainLayout = lazy(() => import("../Layouts/MainLayout"));
 const Home = lazy(() => import("../pages/Home/Home/Home"));
 const Menu = lazy(() => import("../pages/Menu/Menu"));
@@ -43,5 +45,15 @@ export const router = createBrowserRouter([
   {
     path: "/register",
     element: <Register></Register>,
+  },
+  {
+    path: "dashboard",
+    element: <Dashboard></Dashboard>,
+    children: [
+      {
+        path: "cart",
+        element: <Cart></Cart>,
+      },
+    ],
   },
 ]);
