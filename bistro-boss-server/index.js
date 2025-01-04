@@ -30,10 +30,49 @@ async function run() {
       "Pinged your deployment. You successfully connected to MongoDB!"
     );
     const db = client.db("maestroDB");
+    const userCollection = db.collection("users");
     const menuCollection = db.collection("menus");
     const reviewsCollection = db.collection("reviews");
     const cartsCollection = db.collection("carts");
 
+    //USERS RELTED API
+    app.post("/users", async (req, res) => {
+      const userData = req.body;
+      // insert email if user doesn't exist
+      const isExist = await userCollection.findOne({ email: userData?.email });
+      if (isExist) {
+        return res.send({ message: "User Already exists" });
+      }
+      const result = await userCollection.insertOne(userData);
+      res.send(result);
+    });
+    // get users data
+    app.get("/users", async (req, res) => {
+      const result = await userCollection.find().toArray();
+      res.send(result);
+    });
+
+    app.patch("/user/admin/:id", async (req, res) => {
+      const id = req.params.id;
+      const filter = { _id: new ObjectId(id) };
+      const updatedRole = {
+        $set: {
+          role: "admin",
+        },
+      };
+      const result = await userCollection.updateOne(filter, updatedRole);
+      res.send(result);
+    });
+
+    // delete user
+    app.delete("/user/:id", async (req, res) => {
+      const id = req.params.id;
+      const query = { _id: new ObjectId(id) };
+      const result = await userCollection.deleteOne(query);
+      res.send(result);
+    });
+
+    // MENUS APIS
     // get menu data
     app.get("/menus", async (req, res) => {
       const result = await menuCollection.find().toArray();
