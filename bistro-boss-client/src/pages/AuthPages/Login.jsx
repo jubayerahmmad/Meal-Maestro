@@ -8,6 +8,7 @@ import {
 import useAuth from "../../hooks/useAuth";
 import { Helmet } from "react-helmet-async";
 import { toast } from "react-toastify";
+import SocialLogin from "../../components/SocialLogin";
 
 const Login = () => {
   const [disableLogin, setDisableLogin] = useState(true);
@@ -123,6 +124,8 @@ const Login = () => {
           >
             Sign In
           </button>
+          <div className="divider">OR</div>
+          <SocialLogin></SocialLogin>
         </form>
 
         <div className="flex items-center justify-center w-full pb-4">

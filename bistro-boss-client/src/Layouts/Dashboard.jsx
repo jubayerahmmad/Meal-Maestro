@@ -1,8 +1,8 @@
 import { useState } from "react";
-import { FaCalendar, FaListCheck } from "react-icons/fa6";
+import { FaCalendar, FaListCheck, FaUsers } from "react-icons/fa6";
 import { Link, NavLink, Outlet, useNavigate } from "react-router-dom";
 import { MdMenu } from "react-icons/md";
-import { FaHome, FaShoppingCart } from "react-icons/fa";
+import { FaHome, FaShoppingCart, FaUtensilSpoon } from "react-icons/fa";
 import useAuth from "../hooks/useAuth";
 import useCart from "../hooks/useCart";
 import { LuRatio } from "react-icons/lu";
@@ -13,6 +13,8 @@ const Dashboard = () => {
   const { logoutUser } = useAuth();
   const navigate = useNavigate();
   const [cart] = useCart();
+
+  const isAdmin = true;
 
   return (
     <div>
@@ -43,59 +45,130 @@ const Dashboard = () => {
       >
         <div className="h-full px-3 py-4 overflow-y-auto bg-orange-200 dark:bg-gray-800">
           <ul className="space-y-2 font-medium">
-            <li>
-              <NavLink
-                to="home"
-                className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-orange-300 dark:hover:bg-gray-700 group"
-              >
-                <FaHome size={20}></FaHome>
-                <span className="flex-1 ms-3 whitespace-nowrap">User Home</span>
-              </NavLink>
-            </li>
-            <li>
-              <NavLink
-                to="reservation"
-                className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-orange-300 dark:hover:bg-gray-700 group"
-              >
-                <FaCalendar size={20}></FaCalendar>
-                <span className="flex-1 ms-3 whitespace-nowrap">
-                  Reservation
-                </span>
-              </NavLink>
-            </li>
-            <li>
-              <NavLink
-                to="cart"
-                className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-orange-300 dark:hover:bg-gray-700 group"
-              >
-                <FaShoppingCart size={20}></FaShoppingCart>
-                <span className="flex-1 ms-3 whitespace-nowrap">My Cart</span>
-                <span className="badge badge-secondary badge-sm">
-                  {cart.length}
-                </span>
-              </NavLink>
-            </li>
-            <li>
-              <NavLink
-                to="reviews"
-                className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-orange-300 dark:hover:bg-gray-700 group"
-              >
-                <LuRatio size={20}></LuRatio>
-                <span className="flex-1 ms-3 whitespace-nowrap">Reviews</span>
-              </NavLink>
-            </li>
-            <li>
-              <NavLink
-                to="bookings"
-                className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-orange-300 dark:hover:bg-gray-700 group"
-              >
-                <FaListCheck size={20}></FaListCheck>
-                <span className="flex-1 ms-3 whitespace-nowrap">
-                  My Booking
-                </span>
-              </NavLink>
-            </li>
+            {isAdmin ? (
+              <>
+                <li>
+                  <NavLink
+                    to="adminHome"
+                    className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-orange-300 dark:hover:bg-gray-700 group"
+                  >
+                    <FaHome size={20}></FaHome>
+                    <span className="flex-1 ms-3 whitespace-nowrap">
+                      Admin Home
+                    </span>
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink
+                    to="addItems"
+                    className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-orange-300 dark:hover:bg-gray-700 group"
+                  >
+                    <FaUtensilSpoon size={20}></FaUtensilSpoon>
+                    <span className="flex-1 ms-3 whitespace-nowrap">
+                      Add Items
+                    </span>
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink
+                    to="manageItems"
+                    className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-orange-300 dark:hover:bg-gray-700 group"
+                  >
+                    <FaShoppingCart size={20}></FaShoppingCart>
+                    <span className="flex-1 ms-3 whitespace-nowrap">
+                      Manage Items
+                    </span>
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink
+                    to="manageBookings"
+                    className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-orange-300 dark:hover:bg-gray-700 group"
+                  >
+                    <LuRatio size={20}></LuRatio>
+                    <span className="flex-1 ms-3 whitespace-nowrap">
+                      Manage Bookings
+                    </span>
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink
+                    to="allUsers"
+                    className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-orange-300 dark:hover:bg-gray-700 group"
+                  >
+                    <FaUsers size={20}></FaUsers>
+                    <span className="flex-1 ms-3 whitespace-nowrap">
+                      All Users
+                    </span>
+                  </NavLink>
+                </li>
+              </>
+            ) : (
+              <>
+                <li>
+                  <NavLink
+                    to="home"
+                    className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-orange-300 dark:hover:bg-gray-700 group"
+                  >
+                    <FaHome size={20}></FaHome>
+                    <span className="flex-1 ms-3 whitespace-nowrap">
+                      User Home
+                    </span>
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink
+                    to="reservation"
+                    className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-orange-300 dark:hover:bg-gray-700 group"
+                  >
+                    <FaCalendar size={20}></FaCalendar>
+                    <span className="flex-1 ms-3 whitespace-nowrap">
+                      Reservation
+                    </span>
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink
+                    to="cart"
+                    className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-orange-300 dark:hover:bg-gray-700 group"
+                  >
+                    <FaShoppingCart size={20}></FaShoppingCart>
+                    <span className="flex-1 ms-3 whitespace-nowrap">
+                      My Cart
+                    </span>
+                    <span className="badge badge-secondary badge-sm">
+                      {cart.length}
+                    </span>
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink
+                    to="reviews"
+                    className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-orange-300 dark:hover:bg-gray-700 group"
+                  >
+                    <LuRatio size={20}></LuRatio>
+                    <span className="flex-1 ms-3 whitespace-nowrap">
+                      Reviews
+                    </span>
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink
+                    to="bookings"
+                    className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-orange-300 dark:hover:bg-gray-700 group"
+                  >
+                    <FaListCheck size={20}></FaListCheck>
+                    <span className="flex-1 ms-3 whitespace-nowrap">
+                      My Booking
+                    </span>
+                  </NavLink>
+                </li>
+              </>
+            )}
+
             <div className="divider"></div>
+
+            {/* Shared Nav */}
 
             {/* Login logout button */}
 

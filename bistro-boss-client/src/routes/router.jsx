@@ -10,6 +10,7 @@ import Register from "../pages/AuthPages/Register";
 import PrivateRoute from "./PrivateRoute";
 import Dashboard from "../Layouts/Dashboard";
 import Cart from "../pages/Dashboard/Cart/Cart";
+import AllUsers from "../pages/Dashboard/AllUsers/AllUsers";
 const MainLayout = lazy(() => import("../Layouts/MainLayout"));
 const Home = lazy(() => import("../pages/Home/Home/Home"));
 const Menu = lazy(() => import("../pages/Menu/Menu"));
@@ -54,6 +55,13 @@ export const router = createBrowserRouter([
       </PrivateRoute>
     ),
     children: [
+      // Admin Routes
+      {
+        path: "allUsers",
+        element: <AllUsers></AllUsers>,
+      },
+
+      // Users Route
       {
         path: "cart",
         element: <Cart></Cart>,

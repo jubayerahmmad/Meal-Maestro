@@ -5,10 +5,12 @@ import useAuth from "../../hooks/useAuth";
 import { toast } from "react-toastify";
 import axios from "axios";
 import { TbFidgetSpinner } from "react-icons/tb";
+import useAxiosPublic from "../../hooks/useAxiosPublic";
+import SocialLogin from "../../components/SocialLogin";
 
 const Register = () => {
   const { createUser, updateUser, loading, setLoading } = useAuth();
-
+  const axiosPublic = useAxiosPublic();
   const navigate = useNavigate();
   const {
     register,
@@ -20,7 +22,7 @@ const Register = () => {
   const onSubmit = async (data) => {
     setLoading(true);
     const photo = data.photoURL[0];
-    // return console.log(photo);
+
     const formData = new FormData();
     formData.append("image", photo); // object key must be: "image"
 
@@ -31,7 +33,7 @@ const Register = () => {
       }`,
       formData
     );
-    // return console.log(imgData.data.display_url, data.name);
+
     const userInfo = {
       displaName: data.name,
       photoURL: imgData.data.display_url,
@@ -40,8 +42,19 @@ const Register = () => {
       .then(() => {
         updateUser(userInfo)
           .then(() => {
-            toast.success("User Registration Successful");
-            navigate("/");
+            // create user data
+            const userInfo = {
+              name: data?.name,
+              email: data?.email,
+            };
+
+            axiosPublic.post("/users", userInfo).then((res) => {
+              console.log(res.data);
+              if (res.data.insertedId) {
+                toast.success("User Registration Successful");
+                navigate("/");
+              }
+            });
           })
           .catch((err) => {
             console.log(err.message);
@@ -165,6 +178,8 @@ const Register = () => {
               "Register"
             )}
           </button>
+          <div className="divider">OR</div>
+          <SocialLogin></SocialLogin>
         </form>
 
         <div className="flex items-center justify-center w-full pb-4">
