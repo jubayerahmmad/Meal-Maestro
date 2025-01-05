@@ -8,6 +8,8 @@ import useCart from "../hooks/useCart";
 import { LuRatio } from "react-icons/lu";
 import { BiLogOut } from "react-icons/bi";
 import useAdmin from "../hooks/useAdmin";
+import { CiHome } from "react-icons/ci";
+import Loader from "../components/Loader";
 
 const Dashboard = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -15,7 +17,9 @@ const Dashboard = () => {
   const navigate = useNavigate();
   const [cart] = useCart();
 
-  const [isAdmin] = useAdmin();
+  const [isAdmin, isAdminLoading] = useAdmin();
+
+  if (isAdminLoading) return <Loader></Loader>;
 
   return (
     <div>
@@ -173,6 +177,15 @@ const Dashboard = () => {
 
             {/* Login logout button */}
 
+            <li>
+              <Link
+                to="/"
+                className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-orange-300 dark:hover:bg-gray-700 group"
+              >
+                <CiHome size={20}></CiHome>
+                <span className="flex-1 ms-3 whitespace-nowrap">Home</span>
+              </Link>
+            </li>
             <li>
               <Link
                 onClick={() => {

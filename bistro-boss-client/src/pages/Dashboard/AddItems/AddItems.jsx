@@ -1,0 +1,135 @@
+import { FaUtensils } from "react-icons/fa6";
+import SectionTitle from "../../../components/SectiontTtle/SectionTitle";
+import useAxiosPublic from "../../../hooks/useAxiosPublic";
+import { useNavigate } from "react-router-dom";
+import { useForm } from "react-hook-form";
+import axios from "axios";
+
+const AddItems = () => {
+  const axiosPublic = useAxiosPublic();
+  const navigate = useNavigate();
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm();
+
+  const onSubmit = async (data) => {
+    console.log(data);
+    // setLoading(true);
+    // const photo = data.photoURL[0];
+    // const formData = new FormData();
+    // formData.append("image", photo); // object key must be: "image"
+    // //send data to imgbb
+    // const { data: imgData } = await axios.post(
+    //   `https://api.imgbb.com/1/upload?key=${
+    //     import.meta.env.VITE_IMGBB_API_KEY
+    //   }`,
+    //   formData
+    // );
+  };
+  return (
+    <div>
+      <SectionTitle
+        subHeading={"What's New"}
+        heading={"Add an item"}
+      ></SectionTitle>
+      {/* form */}
+      <div>
+        <div className="max-w-6xl mx-auto bg-gray-200 rounded shadow-md p-6">
+          <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+            <div>
+              <label
+                className="block text-sm font-medium text-gray-700"
+                htmlFor="recipeName"
+              >
+                Recipe name<span className="text-red-500">*</span>
+              </label>
+              <input
+                type="text"
+                id="recipeName"
+                {...register("name", { required: true })}
+                placeholder="Recipe name"
+                className="w-full border border-gray-300 rounded-md p-2 mt-1 focus:outline-none focus:ring focus:ring-blue-300"
+              />
+            </div>
+
+            <div className="grid grid-cols-2 gap-4">
+              <div>
+                <label
+                  className="block text-sm font-medium text-gray-700"
+                  htmlFor="category"
+                >
+                  Category<span className="text-red-500">*</span>
+                </label>
+                <select
+                  id="category"
+                  {...register("category", { required: true })}
+                  className="w-full border border-gray-300 rounded-md p-2 mt-1 focus:outline-none focus:ring focus:ring-blue-300"
+                >
+                  <option value="">Category</option>
+                  <option value="salad">Salad</option>
+                  <option value="pizza">Pizza</option>
+                  <option value="soup">Soup</option>
+                  <option value="dessert">Dessert</option>
+                  <option value="drinks">Drinks</option>
+                </select>
+              </div>
+              <div>
+                <label
+                  className="block text-sm font-medium text-gray-700"
+                  htmlFor="price"
+                >
+                  Price<span className="text-red-500">*</span>
+                </label>
+                <input
+                  type="number"
+                  id="price"
+                  {...register("price", { required: true })}
+                  placeholder="Price"
+                  className="w-full border border-gray-300 rounded-md p-2 mt-1 focus:outline-none focus:ring focus:ring-blue-300"
+                />
+              </div>
+            </div>
+
+            <div>
+              <label
+                className="block text-sm font-medium text-gray-700"
+                htmlFor="recipeDetails"
+              >
+                Recipe Details<span className="text-red-500">*</span>
+              </label>
+              <textarea
+                id="recipeDetails"
+                {...register("recipe", { required: true })}
+                placeholder="Recipe Details"
+                rows="8"
+                className="w-full border border-gray-300 rounded-md p-2 mt-1 focus:outline-none focus:ring focus:ring-blue-300"
+              ></textarea>
+            </div>
+
+            <div className="flex items-center">
+              <input
+                type="file"
+                id="fileUpload"
+                {...register("image", { required: true })}
+                className="file-input file-input-bordered file-input-warning w-full max-w-xs"
+              />
+            </div>
+
+            <button
+              type="submit"
+              className="w-full bg-yellow-600 flex items-center justify-center gap-2 text-white font-medium py-2 px-4 rounded-md hover:bg-yellow-700 transition-colors"
+            >
+              Add Item
+              <FaUtensils></FaUtensils>
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default AddItems;
