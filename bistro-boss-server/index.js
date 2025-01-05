@@ -1,6 +1,7 @@
 require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
+const jwt = require("jsonwebtoken");
 const { MongoClient, ServerApiVersion, ObjectId } = require("mongodb");
 const port = process.env.PORT || 5000;
 const app = express();
@@ -8,6 +9,23 @@ const app = express();
 //middlewares
 app.use(express.json());
 app.use(cors());
+
+const verifyToken = async (req, res, next) => {
+  // console.log("inside moddhomware", req.headers);
+  if (!req.headers.authorization) {
+    res.status(401).send({ message: "Unauthorized User" });
+  }
+
+  const token = req.headers.authorization.split(" ")[1];
+  console.log(token);
+  jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, decoded) => {
+    if (err) {
+      res.status(401).send({ message: "Unauthorized User" });
+    }
+    req.user = decoded;
+    next();
+  });
+};
 
 const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.y41ia.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0`;
 
@@ -35,6 +53,27 @@ async function run() {
     const reviewsCollection = db.collection("reviews");
     const cartsCollection = db.collection("carts");
 
+    // verify admin after verifyToken
+    const verifyAdmin = async (req, res, next) => {
+      const email = req.user?.email;
+      const query = { email };
+      const user = await userCollection.findOne(query);
+      const isAdmin = user?.role === "admin";
+      if (!isAdmin) {
+        res.status(403).send({ message: "FORBIDDEN ACCESS" });
+      }
+      next();
+    };
+
+    //JWT
+    app.post("/login", (req, res) => {
+      const userEmail = req.body;
+      const token = jwt.sign(userEmail, process.env.ACCESS_TOKEN_SECRET, {
+        expiresIn: "365d",
+      });
+      res.send({ token });
+    });
+
     //USERS RELTED API
     app.post("/users", async (req, res) => {
       const userData = req.body;
@@ -46,13 +85,33 @@ async function run() {
       const result = await userCollection.insertOne(userData);
       res.send(result);
     });
+
     // get users data
-    app.get("/users", async (req, res) => {
+    app.get("/users", verifyToken, verifyAdmin, async (req, res) => {
       const result = await userCollection.find().toArray();
       res.send(result);
     });
 
-    app.patch("/user/admin/:id", async (req, res) => {
+    // check admin
+    app.get("/user/admin/:email", verifyToken, async (req, res) => {
+      const email = req.params.email;
+      if (email !== req.user.email) {
+        res.status(403).send({ message: "Forbidden Access" });
+      }
+      const query = { email };
+      const user = await userCollection.findOne(query);
+
+      let admin = false;
+      // if (user) {
+      //   admin = user.role === "admin";
+      // }
+      if (user?.role === "admin") {
+        admin = true;
+      }
+      res.send({ admin });
+    });
+
+    app.patch("/user/admin/:id", verifyToken, verifyAdmin, async (req, res) => {
       const id = req.params.id;
       const filter = { _id: new ObjectId(id) };
       const updatedRole = {
@@ -65,7 +124,7 @@ async function run() {
     });
 
     // delete user
-    app.delete("/user/:id", async (req, res) => {
+    app.delete("/user/:id", verifyToken, verifyAdmin, async (req, res) => {
       const id = req.params.id;
       const query = { _id: new ObjectId(id) };
       const result = await userCollection.deleteOne(query);
