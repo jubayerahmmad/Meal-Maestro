@@ -3,7 +3,6 @@ import SectionTitle from "../../../components/SectiontTtle/SectionTitle";
 import useAxiosPublic from "../../../hooks/useAxiosPublic";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import axios from "axios";
 
 const AddItems = () => {
   const axiosPublic = useAxiosPublic();
@@ -16,18 +15,22 @@ const AddItems = () => {
   } = useForm();
 
   const onSubmit = async (data) => {
-    console.log(data);
-    // setLoading(true);
-    // const photo = data.photoURL[0];
-    // const formData = new FormData();
-    // formData.append("image", photo); // object key must be: "image"
-    // //send data to imgbb
-    // const { data: imgData } = await axios.post(
-    //   `https://api.imgbb.com/1/upload?key=${
-    //     import.meta.env.VITE_IMGBB_API_KEY
-    //   }`,
-    //   formData
-    // );
+    // console.log(data);
+    const imageFile = { image: data.image[0] };
+
+    //send data to imgbb
+    const { data: imgData } = await axiosPublic.post(
+      `https://api.imgbb.com/1/upload?key=${
+        import.meta.env.VITE_IMGBB_API_KEY
+      }`,
+      imageFile,
+      {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      }
+    );
+    console.log(imgData.data.display_url);
   };
   return (
     <div>
