@@ -17,7 +17,7 @@ const verifyToken = async (req, res, next) => {
   }
 
   const token = req.headers.authorization.split(" ")[1];
-  console.log(token);
+  // console.log(token);
   jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, decoded) => {
     if (err) {
       res.status(401).send({ message: "Unauthorized User" });
@@ -47,7 +47,9 @@ async function run() {
     console.log(
       "Pinged your deployment. You successfully connected to MongoDB!"
     );
+
     const db = client.db("maestroDB");
+    // --------------------COLLLEEEECCCKKKTIOOONS--------------------
     const userCollection = db.collection("users");
     const menuCollection = db.collection("menus");
     const reviewsCollection = db.collection("reviews");
@@ -65,7 +67,7 @@ async function run() {
       next();
     };
 
-    //JWT
+    //-------------------JWT-------------------
     app.post("/login", (req, res) => {
       const userEmail = req.body;
       const token = jwt.sign(userEmail, process.env.ACCESS_TOKEN_SECRET, {
@@ -74,7 +76,7 @@ async function run() {
       res.send({ token });
     });
 
-    //USERS RELTED API
+    // -------------------USERS RELTED API-------------------
     app.post("/users", async (req, res) => {
       const userData = req.body;
       // insert email if user doesn't exist
@@ -92,10 +94,10 @@ async function run() {
       res.send(result);
     });
 
-    // check admin
+    // -----check admin-------
     app.get("/user/admin/:email", verifyToken, async (req, res) => {
-      const email = req.params.email;
-      if (email !== req.user.email) {
+      const email = req.params?.email;
+      if (email !== req.user?.email) {
         res.status(403).send({ message: "Forbidden Access" });
       }
       const query = { email };
@@ -131,21 +133,37 @@ async function run() {
       res.send(result);
     });
 
-    // MENUS APIS
+    // -------------------MENUS APIS-------------------
     // get menu data
     app.get("/menus", async (req, res) => {
       const result = await menuCollection.find().toArray();
       res.send(result);
     });
+    // post menu items
+    app.post("/menuItem", verifyToken, verifyAdmin, async (req, res) => {
+      const menuItem = req.body;
+      // console.log(menuItem);
+
+      const result = await menuCollection.insertOne(menuItem);
+      res.send(result);
+    });
+    // delete item
+    app.delete("/menuItem/:id", verifyToken, verifyAdmin, async (req, res) => {
+      const id = req.params.id;
+      const query = { _id: new ObjectId(id) };
+      const result = await menuCollection.deleteOne(query);
+      res.send(result);
+    });
+
+    // -------------------REVIEWS-------------------
     // get reviews data
     app.get("/reviews", async (req, res) => {
       const result = await reviewsCollection.find().toArray();
       res.send(result);
     });
 
-    // CARTS
+    // -------------------CARTS-------------------
     // get cart
-
     app.get("/carts", async (req, res) => {
       const email = req.query.email;
       // console.log(email);
