@@ -9,12 +9,14 @@ import {
 } from "firebase/auth";
 import { createContext, useEffect, useState } from "react";
 import { auth } from "../firebase/firebase.config";
+import useAxiosPublic from "../hooks/useAxiosPublic";
 
 const googleProvider = new GoogleAuthProvider();
 export const AuthContext = createContext();
 const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
+  const axiosPublic = useAxiosPublic();
 
   // createUser
   const createUser = (email, password) => {
@@ -50,8 +52,17 @@ const AuthProvider = ({ children }) => {
     const unSub = onAuthStateChanged(auth, (currentUser) => {
       if (currentUser) {
         setUser(currentUser);
-        // console.log("current user", currentUser);
+        const userEmail = { email: currentUser?.email };
+        // token get
+        axiosPublic.post("/login", userEmail).then((res) => {
+          // console.log(res.data);
+          if (res.data.token) {
+            localStorage.setItem("access-token", res.data.token);
+          }
+        });
       } else {
+        //token remove
+        localStorage.removeItem("access-token");
         setUser(null);
       }
       setLoading(false);

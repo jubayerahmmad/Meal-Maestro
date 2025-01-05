@@ -11,6 +11,7 @@ import PrivateRoute from "./PrivateRoute";
 import Dashboard from "../Layouts/Dashboard";
 import Cart from "../pages/Dashboard/Cart/Cart";
 import AllUsers from "../pages/Dashboard/AllUsers/AllUsers";
+import AdminRoute from "./AdminRoute";
 const MainLayout = lazy(() => import("../Layouts/MainLayout"));
 const Home = lazy(() => import("../pages/Home/Home/Home"));
 const Menu = lazy(() => import("../pages/Menu/Menu"));
@@ -58,7 +59,11 @@ export const router = createBrowserRouter([
       // Admin Routes
       {
         path: "allUsers",
-        element: <AllUsers></AllUsers>,
+        element: (
+          <AdminRoute>
+            <AllUsers></AllUsers>
+          </AdminRoute>
+        ),
       },
 
       // Users Route

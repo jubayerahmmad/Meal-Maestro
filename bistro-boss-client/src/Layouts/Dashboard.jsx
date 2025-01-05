@@ -7,6 +7,7 @@ import useAuth from "../hooks/useAuth";
 import useCart from "../hooks/useCart";
 import { LuRatio } from "react-icons/lu";
 import { BiLogOut } from "react-icons/bi";
+import useAdmin from "../hooks/useAdmin";
 
 const Dashboard = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -14,7 +15,7 @@ const Dashboard = () => {
   const navigate = useNavigate();
   const [cart] = useCart();
 
-  const isAdmin = true;
+  const [isAdmin] = useAdmin();
 
   return (
     <div>
