@@ -3,9 +3,12 @@ import SectionTitle from "../../../components/SectiontTtle/SectionTitle";
 import useAxiosPublic from "../../../hooks/useAxiosPublic";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
+import useAxiosSecure from "../../../hooks/useAxiosSecure";
+import { toast } from "react-toastify";
 
 const AddItems = () => {
   const axiosPublic = useAxiosPublic();
+  const axiosSecure = useAxiosSecure();
   const navigate = useNavigate();
   const {
     register,
@@ -15,7 +18,7 @@ const AddItems = () => {
   } = useForm();
 
   const onSubmit = async (data) => {
-    // console.log(data);
+    console.log(data);
     const imageFile = { image: data.image[0] };
 
     //send data to imgbb
@@ -30,7 +33,25 @@ const AddItems = () => {
         },
       }
     );
+
     console.log(imgData.data.display_url);
+    if (imgData.success) {
+      // send data to server
+      const menuItem = {
+        name: data.name,
+        category: data.category,
+        price: parseFloat(data.price),
+        recipe: data.recipe,
+        image: imgData.data.display_url,
+      };
+
+      const { data: itemData } = await axiosSecure.post("/menuItem", menuItem);
+      console.log(itemData);
+      if (itemData.insertedId) {
+        toast.success("Food Item Added Successfully");
+        reset();
+      }
+    }
   };
   return (
     <div>
