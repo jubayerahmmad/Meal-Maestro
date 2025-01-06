@@ -9,7 +9,7 @@ import { useState } from "react";
 import { useParams } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 const Order = () => {
-  const { menu } = useMenu();
+  const [menu] = useMenu();
   const categories = ["salads", "pizzas", "soup", "desserts", "drinks"];
   const { category } = useParams();
   const initialIndex = categories.indexOf(category);

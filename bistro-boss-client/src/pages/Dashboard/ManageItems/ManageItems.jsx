@@ -4,6 +4,7 @@ import useMenu from "../../../hooks/useMenu";
 import Swal from "sweetalert2";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import Loader from "../../../components/Loader";
+import { Link } from "react-router-dom";
 
 const ManageItems = () => {
   const [menu, isLoading, refetch] = useMenu();
@@ -79,12 +80,12 @@ const ManageItems = () => {
                   </td>
                   <td>${item.price}</td>
                   <td className="flex gap-4 justify-center">
-                    <button
-                      //   onClick={() => hanldeDelete(item._id)}
+                    <Link
+                      to={`updateItem/${item._id}`}
                       className="btn btn-sm btn-accent text-white"
                     >
                       <MdEdit size={20}></MdEdit>
-                    </button>
+                    </Link>
                     <button
                       onClick={() => hanldeDelete(item._id)}
                       className="btn btn-sm btn-error text-white"

@@ -10,7 +10,7 @@ import SectionTitle from "../../components/SectiontTtle/SectionTitle";
 import MenuCategory from "./MenuCategory";
 
 const Menu = () => {
-  const { menu } = useMenu();
+  const [menu] = useMenu();
   const offered = menu.filter((item) => item.category === "offered");
   const salad = menu.filter((item) => item.category === "salad");
   const pizza = menu.filter((item) => item.category === "pizza");
