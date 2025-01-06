@@ -1,1 +1,7 @@
 GET http://localhost:5000/users
+
+###
+GET http://localhost:5000/menuItem/642c155b2c4774f05c36eeaa
+
+###
+GET http://localhost:5000/menus
