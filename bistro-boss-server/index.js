@@ -256,6 +256,27 @@ async function run() {
       const result = await paymentsCollection.find(query).toArray();
       res.send(result);
     });
+
+    // STATS or ANALYTICS for admin home
+    app.get("/admin-stats", async (req, res) => {
+      const users = await userCollection.estimatedDocumentCount();
+      const menuItems = await menuCollection.estimatedDocumentCount();
+      const orders = await paymentsCollection.estimatedDocumentCount();
+
+      // not the best way
+      const payments = await paymentsCollection.find().toArray();
+      const revenue = payments.reduce(
+        (total, payment) => total + payment.price,
+        0
+      );
+
+      res.send({
+        users,
+        menuItems,
+        orders,
+        revenue,
+      });
+    });
   } finally {
     // Ensures that the client will close when you finish/error
     // await client.close();
