@@ -6,7 +6,7 @@ import { FaHome, FaShoppingCart, FaUtensilSpoon } from "react-icons/fa";
 import useAuth from "../hooks/useAuth";
 import useCart from "../hooks/useCart";
 import { LuRatio } from "react-icons/lu";
-import { BiLogOut } from "react-icons/bi";
+import { BiHistory, BiLogOut } from "react-icons/bi";
 import useAdmin from "../hooks/useAdmin";
 import { CiHome } from "react-icons/ci";
 import Loader from "../components/Loader";
@@ -143,6 +143,17 @@ const Dashboard = () => {
                     </span>
                     <span className="badge badge-secondary badge-sm">
                       {cart.length}
+                    </span>
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink
+                    to="payment-history"
+                    className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-orange-300 dark:hover:bg-gray-700 group"
+                  >
+                    <BiHistory size={20}></BiHistory>
+                    <span className="flex-1 ms-3 whitespace-nowrap">
+                      Payment History
                     </span>
                   </NavLink>
                 </li>

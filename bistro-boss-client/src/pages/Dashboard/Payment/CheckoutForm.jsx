@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import useCart from "../../../hooks/useCart";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import useAuth from "../../../hooks/useAuth";
+import { toast } from "react-toastify";
 
 const CheckoutForm = () => {
   const [error, setError] = useState("");
@@ -12,19 +13,21 @@ const CheckoutForm = () => {
   const elements = useElements();
   const axiosSecure = useAxiosSecure();
   const { user } = useAuth();
-  const [cart] = useCart();
+  const [cart, refetch] = useCart();
   const totalPrice = cart.reduce((total, item) => total + item.price, 0);
 
   useEffect(() => {
-    axiosSecure
-      .post("/create-payment-intent", {
-        price: totalPrice,
-      })
-      .then((res) => {
-        console.log(res.data);
-        console.log(res.data.clientSecret);
-        setClientSecret(res.data.clientSecret);
-      });
+    if (totalPrice) {
+      axiosSecure
+        .post("/create-payment-intent", {
+          price: totalPrice,
+        })
+        .then((res) => {
+          console.log(res.data);
+          console.log(res.data.clientSecret);
+          setClientSecret(res.data.clientSecret);
+        });
+    }
   }, [totalPrice, axiosSecure]);
 
   const handleSubmit = async (e) => {
@@ -70,6 +73,20 @@ const CheckoutForm = () => {
       if (paymentIntent.status === "succeeded") {
         console.log("transaction id", paymentIntent.id);
         setTransactionId(paymentIntent.id);
+        // save payment history to the db
+        const payment = {
+          email: user?.email,
+          price: totalPrice,
+          transactionId: paymentIntent.id,
+          date: new Date(), // convert to utc format using moment js
+          cartIds: cart.map((item) => item._id),
+          foodIds: cart.map((item) => item.foodId),
+          status: "Pending",
+        };
+        const res = await axiosSecure.post("/payments", payment);
+        console.log(res.data);
+        refetch();
+        toast.success("PAYMENT SUCCESSFUL");
       }
     }
   };

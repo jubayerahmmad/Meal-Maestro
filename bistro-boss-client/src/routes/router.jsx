@@ -16,6 +16,7 @@ import AddItems from "../pages/Dashboard/AddItems/AddItems";
 import ManageItems from "../pages/Dashboard/ManageItems/ManageItems";
 import UpdateItems from "../pages/Dashboard/UpdateItems/UpdateItems";
 import Payment from "../pages/Dashboard/Payment/Payment";
+import PaymentHistory from "../pages/Dashboard/PaymentHistory/PaymentHistory";
 const MainLayout = lazy(() => import("../Layouts/MainLayout"));
 const Home = lazy(() => import("../pages/Home/Home/Home"));
 const Menu = lazy(() => import("../pages/Menu/Menu"));
@@ -104,6 +105,10 @@ export const router = createBrowserRouter([
       {
         path: "payment",
         element: <Payment />,
+      },
+      {
+        path: "payment-history",
+        element: <PaymentHistory />,
       },
     ],
   },
