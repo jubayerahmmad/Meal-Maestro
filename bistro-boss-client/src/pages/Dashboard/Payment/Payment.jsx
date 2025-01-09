@@ -6,7 +6,7 @@ import CheckoutForm from "./CheckoutForm";
 const stripePromise = loadStripe(import.meta.env.VITE_Stripe_Payment_PK); // publishable key
 const Payment = () => {
   return (
-    <div>
+    <div className="max-w-7xl mx-auto">
       <SectionTitle heading={"Payment"} subHeading={"Pay Now"} />
 
       <div>
