@@ -2,13 +2,16 @@ import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
 import { useEffect, useState } from "react";
 import useCart from "../../../hooks/useCart";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
+import useAuth from "../../../hooks/useAuth";
 
 const CheckoutForm = () => {
   const [error, setError] = useState("");
   const [clientSecret, setClientSecret] = useState("");
+  const [transactionId, setTransactionId] = useState("");
   const stripe = useStripe();
   const elements = useElements();
   const axiosSecure = useAxiosSecure();
+  const { user } = useAuth();
   const [cart] = useCart();
   const totalPrice = cart.reduce((total, item) => total + item.price, 0);
 
@@ -20,6 +23,7 @@ const CheckoutForm = () => {
       .then((res) => {
         console.log(res.data);
         console.log(res.data.clientSecret);
+        setClientSecret(res.data.clientSecret);
       });
   }, [totalPrice, axiosSecure]);
 
@@ -43,8 +47,30 @@ const CheckoutForm = () => {
       console.log(error);
       setError(error.message);
     } else {
-      console.log(paymentMethod);
+      console.log("Payment Method", paymentMethod);
       setError("");
+    }
+
+    // confirm payment
+    const { paymentIntent, error: confirmError } =
+      await stripe.confirmCardPayment(clientSecret, {
+        payment_method: {
+          card: card,
+          billing_details: {
+            email: user?.email,
+            name: user?.displayName || user?.name || "Anonymous Participent",
+          },
+        },
+      });
+
+    if (confirmError) {
+      console.log(confirmError);
+    } else {
+      console.log("Payment Intent", paymentIntent);
+      if (paymentIntent.status === "succeeded") {
+        console.log("transaction id", paymentIntent.id);
+        setTransactionId(paymentIntent.id);
+      }
     }
   };
   return (
@@ -73,7 +99,10 @@ const CheckoutForm = () => {
         >
           Pay
         </button>
-        <p className="text-red-600 font-bold">{error}</p>
+        <div className="flex justify-between">
+          <p className="text-red-600 font-bold">{error}</p>
+          <p>Transaction ID: {transactionId}</p>
+        </div>
       </form>
     </div>
   );
