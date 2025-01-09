@@ -3,10 +3,14 @@ import useAuth from "../hooks/useAuth";
 import { toast } from "react-toastify";
 import { FaShoppingCart } from "react-icons/fa";
 import useCart from "../hooks/useCart";
+import useAdmin from "../hooks/useAdmin";
 
 const Navbar = () => {
   const { user, logoutUser } = useAuth();
+  // console.log(user);
   const [cart] = useCart();
+  const [isAdmin] = useAdmin();
+  // console.log(isAdmin);
   const navOptions = (
     <>
       <li>
@@ -94,7 +98,10 @@ const Navbar = () => {
                   className="menu menu-sm dropdown-content bg-base-100 text-black rounded-box z-[1] mt-3 w-52 p-2 shadow"
                 >
                   <li>
-                    <NavLink to="/dashboard" className="justify-between">
+                    <NavLink
+                      to={`/dashboard/${isAdmin ? "adminHome" : "userHome"}`}
+                      className="justify-between"
+                    >
                       Dashboard
                     </NavLink>
                   </li>
@@ -126,11 +133,6 @@ const Navbar = () => {
                   tabIndex={0}
                   className="menu menu-sm dropdown-content bg-base-100 text-black rounded-box z-[1] mt-3 w-52 p-2 shadow"
                 >
-                  <li>
-                    <Link to="/dashboard" className="justify-between">
-                      Dashboard
-                    </Link>
-                  </li>
                   <li>
                     <Link to="/login">Login</Link>
                   </li>

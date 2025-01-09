@@ -17,6 +17,8 @@ import ManageItems from "../pages/Dashboard/ManageItems/ManageItems";
 import UpdateItems from "../pages/Dashboard/UpdateItems/UpdateItems";
 import Payment from "../pages/Dashboard/Payment/Payment";
 import PaymentHistory from "../pages/Dashboard/PaymentHistory/PaymentHistory";
+import UserHome from "../pages/Dashboard/UserHome/UserHome";
+import AdminHome from "../pages/Dashboard/AdminHome/AdminHome";
 const MainLayout = lazy(() => import("../Layouts/MainLayout"));
 const Home = lazy(() => import("../pages/Home/Home/Home"));
 const Menu = lazy(() => import("../pages/Menu/Menu"));
@@ -63,6 +65,14 @@ export const router = createBrowserRouter([
     children: [
       // Admin Routes
       {
+        path: "adminHome",
+        element: (
+          <AdminRoute>
+            <AdminHome></AdminHome>
+          </AdminRoute>
+        ),
+      },
+      {
         path: "allUsers",
         element: (
           <AdminRoute>
@@ -98,6 +108,10 @@ export const router = createBrowserRouter([
       },
 
       // Users Route
+      {
+        path: "userHome",
+        element: <UserHome />,
+      },
       {
         path: "cart",
         element: <Cart></Cart>,

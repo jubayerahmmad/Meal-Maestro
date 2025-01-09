@@ -26,7 +26,7 @@ const SocialLogin = () => {
         });
       })
       .then((err) => {
-        console.log(err.message);
+        // console.log(err);
       });
   };
 
