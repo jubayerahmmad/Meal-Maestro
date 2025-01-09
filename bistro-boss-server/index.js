@@ -55,6 +55,7 @@ async function run() {
     const menuCollection = db.collection("menus");
     const reviewsCollection = db.collection("reviews");
     const cartsCollection = db.collection("carts");
+    const paymentsCollection = db.collection("payments");
 
     // verify admin after verifyToken
     const verifyAdmin = async (req, res, next) => {
@@ -212,10 +213,13 @@ async function run() {
       res.send(result);
     });
 
+    // --------------PAYMENT RELATED API
     // -------------PAYMENT INTENT-----------------
-    app.post("create-payment-intent", async (req, res) => {
+    app.post("/create-payment-intent", async (req, res) => {
       const { price } = req.body;
       const amount = parseInt(price * 100);
+      // console.log(amount);
+
       // create payment intent
       const paymentIntent = await stripe.paymentIntents.create({
         amount: amount,
@@ -225,6 +229,32 @@ async function run() {
       res.send({
         clientSecret: paymentIntent.client_secret,
       });
+    });
+
+    // post payment details
+    app.post("/payments", async (req, res) => {
+      const payment = req.body;
+      const result = await paymentsCollection.insertOne(payment);
+
+      // delete each item from the cart
+      const query = {
+        _id: {
+          $in: payment.cartIds.map((id) => new ObjectId(id)),
+        },
+      };
+      const deleteCart = await cartsCollection.deleteMany(query);
+      res.send(result);
+    });
+
+    // get payment history of a user
+    app.get("/payments/:email", verifyToken, async (req, res) => {
+      const email = req.params.email;
+      if (email !== req.user?.email) {
+        res.status(403).send("Forbidden Access");
+      }
+      const query = { email };
+      const result = await paymentsCollection.find(query).toArray();
+      res.send(result);
     });
   } finally {
     // Ensures that the client will close when you finish/error
