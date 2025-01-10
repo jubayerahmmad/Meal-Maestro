@@ -49,7 +49,7 @@ const Register = () => {
             };
 
             axiosPublic.post("/users", userInfo).then((res) => {
-              console.log(res.data);
+              // console.log(res.data);
               if (res.data.insertedId) {
                 toast.success("User Registration Successful");
                 navigate("/");
@@ -57,11 +57,11 @@ const Register = () => {
             });
           })
           .catch((err) => {
-            console.log(err.message);
+            // console.log(err.message);
           });
       })
       .catch((err) => {
-        console.log(err.message);
+        // console.log(err.message);
       });
     reset();
   };

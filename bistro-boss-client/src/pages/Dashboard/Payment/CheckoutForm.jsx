@@ -25,8 +25,8 @@ const CheckoutForm = () => {
           price: totalPrice,
         })
         .then((res) => {
-          console.log(res.data);
-          console.log(res.data.clientSecret);
+          // console.log(res.data);
+          // console.log(res.data.clientSecret);
           setClientSecret(res.data.clientSecret);
         });
     }
@@ -49,10 +49,10 @@ const CheckoutForm = () => {
     });
 
     if (error) {
-      console.log(error);
+      // console.log(error);
       setError(error.message);
     } else {
-      console.log("Payment Method", paymentMethod);
+      // console.log("Payment Method", paymentMethod);
       setError("");
     }
 
@@ -69,11 +69,11 @@ const CheckoutForm = () => {
       });
 
     if (confirmError) {
-      console.log(confirmError);
+      // console.log(confirmError);
     } else {
-      console.log("Payment Intent", paymentIntent);
+      // console.log("Payment Intent", paymentIntent);
       if (paymentIntent.status === "succeeded") {
-        console.log("transaction id", paymentIntent.id);
+        // console.log("transaction id", paymentIntent.id);
         setTransactionId(paymentIntent.id);
         // save payment history to the db
         const payment = {
@@ -86,7 +86,7 @@ const CheckoutForm = () => {
           status: "Pending",
         };
         const res = await axiosSecure.post("/payments", payment);
-        console.log(res.data);
+        // console.log(res.data);
         refetch();
         toast.success("PAYMENT SUCCESSFUL");
         navigate("/dashboard/payment-history");

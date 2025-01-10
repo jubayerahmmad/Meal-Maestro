@@ -18,7 +18,7 @@ const AddItems = () => {
   } = useForm();
 
   const onSubmit = async (data) => {
-    console.log(data);
+    // console.log(data);
     const imageFile = { image: data.image[0] };
 
     //send data to imgbb
@@ -34,7 +34,7 @@ const AddItems = () => {
       }
     );
 
-    console.log(imgData.data.display_url);
+    // console.log(imgData.data.display_url);
     if (imgData.success) {
       // send data to server
       const menuItem = {
@@ -46,7 +46,7 @@ const AddItems = () => {
       };
 
       const { data: itemData } = await axiosSecure.post("/menuItem", menuItem);
-      console.log(itemData);
+      // console.log(itemData);
       if (itemData.insertedId) {
         toast.success("Food Item Added Successfully");
         reset();
