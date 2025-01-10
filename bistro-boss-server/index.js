@@ -264,11 +264,24 @@ async function run() {
       const orders = await paymentsCollection.estimatedDocumentCount();
 
       // not the best way
-      const payments = await paymentsCollection.find().toArray();
-      const revenue = payments.reduce(
-        (total, payment) => total + payment.price,
-        0
-      );
+      // const payments = await paymentsCollection.find().toArray();
+      // const revenue = payments.reduce(
+      //   (total, payment) => total + payment.price,
+      //   0
+      // );
+
+      const payment = await paymentsCollection
+        .aggregate([
+          {
+            $group: {
+              _id: null,
+              totalRevenue: { $sum: "$price" },
+            },
+          },
+        ])
+        .toArray();
+
+      const revenue = payment.length > 0 ? payment[0].totalRevenue : 0;
 
       res.send({
         users,
@@ -276,6 +289,44 @@ async function run() {
         orders,
         revenue,
       });
+    });
+
+    // get order stats using aggregate pipeline
+    app.get("/order-stats", verifyToken, verifyAdmin, async (req, res) => {
+      const result = await paymentsCollection
+        .aggregate([
+          {
+            $unwind: "$foodIds",
+          },
+          {
+            $lookup: {
+              from: "menus",
+              localField: "foodIds",
+              foreignField: "_id",
+              as: "foodItems",
+            },
+          },
+          {
+            $unwind: "$foodItems",
+          },
+          {
+            $group: {
+              _id: "$foodItems.category",
+              quantity: { $sum: 1 },
+              revenue: { $sum: "$foodItems.price" },
+            },
+          },
+          {
+            $project: {
+              _id: 0,
+              category: "$_id",
+              quantity: "$quantity",
+              revenue: "$revenue",
+            },
+          },
+        ])
+        .toArray();
+      res.send(result);
     });
   } finally {
     // Ensures that the client will close when you finish/error
