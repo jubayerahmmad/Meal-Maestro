@@ -21,7 +21,7 @@ const Testimonial = () => {
       });
   }, []);
   return (
-    <section>
+    <section className="max-w-7xl mx-auto">
       <SectionTitle
         subHeading={"What our Clients Say"}
         heading={"Testimonials"}

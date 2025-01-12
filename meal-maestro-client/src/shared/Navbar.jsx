@@ -4,13 +4,16 @@ import { toast } from "react-toastify";
 import { FaShoppingCart } from "react-icons/fa";
 import useCart from "../hooks/useCart";
 import useAdmin from "../hooks/useAdmin";
+import Loader from "../components/Loader";
 
 const Navbar = () => {
-  const { user, logoutUser } = useAuth();
-  // console.log(user);
+  const { user, logoutUser, loading } = useAuth();
+
   const [cart] = useCart();
   const [isAdmin] = useAdmin();
-  // console.log(isAdmin);
+
+  if (loading) return <Loader />;
+
   const navOptions = (
     <>
       <li>
@@ -32,7 +35,7 @@ const Navbar = () => {
   };
 
   return (
-    <div className="fixed w-full z-50 bg-opacity-60 text-white bg-black">
+    <div className="fixed w-full z-50 bg-opacity-60 text-white bg-black animate__animated animate__fadeInDown">
       <div className="navbar lg:w-10/12 mx-auto px-6">
         <div className="navbar-start">
           <div className="dropdown">
@@ -64,7 +67,7 @@ const Navbar = () => {
           </Link>
         </div>
         <div className="navbar-center hidden lg:flex">
-          <ul className="text-3xl gap-10 px-4 py-2 flex font-semibold rounded-md">
+          <ul className="text-2xl gap-4 px-4 py-2 flex font-semibold rounded-md">
             {navOptions}
           </ul>
         </div>

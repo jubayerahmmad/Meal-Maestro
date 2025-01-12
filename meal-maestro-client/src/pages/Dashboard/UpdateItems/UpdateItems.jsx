@@ -4,20 +4,21 @@ import useAxiosPublic from "../../../hooks/useAxiosPublic";
 import { useForm } from "react-hook-form";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import { toast } from "react-toastify";
-import { useLoaderData } from "react-router-dom";
+import { useLoaderData, useNavigate } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 
 const UpdateItems = () => {
   const axiosPublic = useAxiosPublic();
   const axiosSecure = useAxiosSecure();
   const itemData = useLoaderData();
+  const navigate = useNavigate();
   const { name, recipe, category, image, price, _id } = itemData;
   //   console.log(itemData);
 
   const {
     register,
     handleSubmit,
-    reset,
+
     formState: { errors },
   } = useForm();
 
@@ -38,7 +39,7 @@ const UpdateItems = () => {
       }
     );
 
-    console.log(imgData.data.display_url);
+    // console.log(imgData.data.display_url);
     if (imgData.success) {
       // send data to server
       const menuItem = {
@@ -53,10 +54,10 @@ const UpdateItems = () => {
         `/updateMenu/${_id}`,
         menuItem
       );
-      console.log(itemData);
+      // console.log(itemData);
       if (itemData.modifiedCount) {
         toast.success("Food Item Added Successfully");
-        reset();
+        navigate(-1);
       }
     }
   };

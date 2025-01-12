@@ -85,7 +85,7 @@ const Dashboard = () => {
                     </span>
                   </NavLink>
                 </li>
-                <li>
+                {/* <li>
                   <NavLink
                     to="manageBookings"
                     className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-orange-300 dark:hover:bg-gray-700 group"
@@ -95,7 +95,7 @@ const Dashboard = () => {
                       Manage Bookings
                     </span>
                   </NavLink>
-                </li>
+                </li> */}
                 <li>
                   <NavLink
                     to="allUsers"
@@ -121,7 +121,7 @@ const Dashboard = () => {
                     </span>
                   </NavLink>
                 </li>
-                <li>
+                {/* <li>
                   <NavLink
                     to="reservation"
                     className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-orange-300 dark:hover:bg-gray-700 group"
@@ -131,7 +131,7 @@ const Dashboard = () => {
                       Reservation
                     </span>
                   </NavLink>
-                </li>
+                </li> */}
                 <li>
                   <NavLink
                     to="cart"
@@ -168,7 +168,7 @@ const Dashboard = () => {
                     </span>
                   </NavLink>
                 </li>
-                <li>
+                {/* <li>
                   <NavLink
                     to="bookings"
                     className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-orange-300 dark:hover:bg-gray-700 group"
@@ -178,7 +178,7 @@ const Dashboard = () => {
                       My Booking
                     </span>
                   </NavLink>
-                </li>
+                </li> */}
               </>
             )}
 

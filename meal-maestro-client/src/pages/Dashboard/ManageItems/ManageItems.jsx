@@ -6,13 +6,13 @@ import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import Loader from "../../../components/Loader";
 import { Link } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
+import { FaSort } from "react-icons/fa6";
 
 const ManageItems = () => {
   const [menu, isLoading, refetch] = useMenu();
   const axiosSecure = useAxiosSecure();
 
   const hanldeDelete = (id) => {
-    // console.log(id);
     Swal.fire({
       title: "Are you sure?",
       text: "You won't be able to revert this!",
@@ -58,7 +58,20 @@ const ManageItems = () => {
                 <th>#</th>
                 <th>Image</th>
                 <th>Name</th>
-                <th>Price</th>
+                <th>
+                  Price{" "}
+                  <button>
+                    {" "}
+                    <FaSort />{" "}
+                  </button>{" "}
+                </th>
+                <th>
+                  Category{" "}
+                  <button>
+                    {" "}
+                    <FaSort />{" "}
+                  </button>{" "}
+                </th>
                 <th className="text-center">Action</th>
               </tr>
             </thead>
@@ -83,6 +96,7 @@ const ManageItems = () => {
                     <p className="font-bold">{item.name}</p>
                   </td>
                   <td>${item.price}</td>
+                  <td className="uppercase">{item.category}</td>
                   <td className="flex gap-4 justify-center">
                     <Link
                       to={`updateItem/${item._id}`}

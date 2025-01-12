@@ -9,7 +9,12 @@ import img6 from "../../../../assets/home/06.png";
 const Banner = () => {
   return (
     <div>
-      <Carousel infiniteLoop={true} autoPlay={true} interval={3200}>
+      <Carousel
+        showArrows={false}
+        infiniteLoop={true}
+        autoPlay={true}
+        interval={3200}
+      >
         <div className="xl:h-[750px]">
           <img className="object-cover" src={img1} />
         </div>

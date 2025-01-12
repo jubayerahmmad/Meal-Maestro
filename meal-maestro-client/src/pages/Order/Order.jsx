@@ -1,5 +1,4 @@
 import orderImg from "../../assets/shop/banner2.jpg";
-import FoodCard from "../../components/FoodCard";
 import useMenu from "../../hooks/useMenu";
 import Cover from "../../shared/Cover";
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
@@ -30,8 +29,8 @@ const Order = () => {
         description={"Would you like to try a dish?"}
       ></Cover>
 
-      <div className="my-10 mx-auto w-10/12">
-        <div className="max-w-7xl mx-auto">
+      <div className="my-10 mx-auto w-11/12 lg:w-8/12">
+        <div className="">
           <Tabs
             selectedIndex={tabIndex}
             onSelect={(index) => setTabIndex(index)}
