@@ -5,6 +5,7 @@ import { useForm } from "react-hook-form";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import { toast } from "react-toastify";
 import { useLoaderData } from "react-router-dom";
+import { Helmet } from "react-helmet-async";
 
 const UpdateItems = () => {
   const axiosPublic = useAxiosPublic();
@@ -61,6 +62,9 @@ const UpdateItems = () => {
   };
   return (
     <div>
+      <Helmet>
+        <title>Admin Dashboard</title>
+      </Helmet>
       <SectionTitle
         subHeading={"What's New"}
         heading={"Update item"}

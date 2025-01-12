@@ -53,8 +53,8 @@ const Footer = () => {
         </nav>
       </footer>
       <p className="text-center bg-neutral text-neutral-content p-6">
-        Copyright © {new Date().getFullYear()} - All right reserved by ACME
-        Industries Ltd
+        Copyright © {new Date().getFullYear()} - All right reserved by Meal
+        Maestro Restaurant
       </p>
     </div>
   );

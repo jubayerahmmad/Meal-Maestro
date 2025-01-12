@@ -5,7 +5,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 // Import Swiper styles
 import "swiper/css";
 import "swiper/css/bundle";
-import { Navigation } from "swiper/modules";
+import { Autoplay } from "swiper/modules";
 import { useEffect, useState } from "react";
 import { Rating } from "@smastrom/react-rating";
 import "@smastrom/react-rating/style.css";
@@ -27,7 +27,14 @@ const Testimonial = () => {
         heading={"Testimonials"}
       ></SectionTitle>
       <div className="my-10 bg-slate-100 p-6">
-        <Swiper navigation={true} modules={[Navigation]} className="mySwiper">
+        <Swiper
+          modules={[Autoplay]}
+          autoplay={{
+            delay: 4000,
+            disableOnInteraction: false,
+          }}
+          className="mySwiper"
+        >
           {reviews.map((review) => (
             <SwiperSlide key={review._id}>
               <div className="flex justify-center">

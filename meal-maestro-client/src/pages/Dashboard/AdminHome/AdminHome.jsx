@@ -15,6 +15,7 @@ import {
   Pie,
   Legend,
 } from "recharts";
+import { Helmet } from "react-helmet-async";
 
 // barchart color
 const colors = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042", "red", "pink"];
@@ -94,6 +95,9 @@ const AdminHome = () => {
   const { users, orders, menuItems, revenue } = stats;
   return (
     <div>
+      <Helmet>
+        <title>Admin Dashboard</title>
+      </Helmet>
       <h2 className="text-4xl font-semibold">
         Hi, Welcome Back {user?.displayName && user?.displayName}!
       </h2>
@@ -130,17 +134,17 @@ const AdminHome = () => {
         </div>
       </div>
 
-      <div className="flex items-center gap-4">
+      <div className="lg:flex justify-center items-center gap-4">
         {/* barchart */}
         <div>
           <BarChart
-            width={500}
+            width={380}
             height={300}
             data={chartData}
             margin={{
-              top: 20,
-              right: 30,
-              left: 20,
+              top: 10,
+              right: 10,
+              left: 10,
               bottom: 5,
             }}
           >

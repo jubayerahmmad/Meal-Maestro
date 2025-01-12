@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import { toast } from "react-toastify";
+import { Helmet } from "react-helmet-async";
 
 const AddItems = () => {
   const axiosPublic = useAxiosPublic();
@@ -55,6 +56,9 @@ const AddItems = () => {
   };
   return (
     <div>
+      <Helmet>
+        <title>Admin Dashboard</title>
+      </Helmet>
       <SectionTitle
         subHeading={"What's New"}
         heading={"Add an item"}

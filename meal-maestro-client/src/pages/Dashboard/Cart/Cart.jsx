@@ -4,6 +4,7 @@ import useCart from "../../../hooks/useCart";
 import Swal from "sweetalert2";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import { Link } from "react-router-dom";
+import { Helmet } from "react-helmet-async";
 
 const Cart = () => {
   const [cart, refetch] = useCart();
@@ -37,6 +38,9 @@ const Cart = () => {
 
   return (
     <div className="lg:w-10/12 mx-auto">
+      <Helmet>
+        <title>Customer Dashboard</title>
+      </Helmet>
       <SectionTitle
         heading={"Wanna Add more?"}
         subHeading={"My Cart"}

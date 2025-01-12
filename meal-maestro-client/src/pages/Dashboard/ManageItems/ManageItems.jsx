@@ -5,6 +5,7 @@ import Swal from "sweetalert2";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import Loader from "../../../components/Loader";
 import { Link } from "react-router-dom";
+import { Helmet } from "react-helmet-async";
 
 const ManageItems = () => {
   const [menu, isLoading, refetch] = useMenu();
@@ -40,6 +41,9 @@ const ManageItems = () => {
 
   return (
     <div>
+      <Helmet>
+        <title>Admin Dashboard</title>
+      </Helmet>
       <SectionTitle
         heading={"Manage items"}
         subHeading={"Hurry Up!"}

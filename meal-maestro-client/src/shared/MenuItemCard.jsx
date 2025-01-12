@@ -11,7 +11,7 @@ const MenuItemCard = ({ item }) => {
         <h1 className="font-bold xl:text-3xl">{name}</h1>
         <p className="text-xs xl:text-lg">{recipe}</p>
       </div>
-      <p className="text-orange-500 text-sm lg:text-lg">{price}</p>
+      <p className="text-orange-500 text-sm lg:text-lg">${price}</p>
     </div>
   );
 };

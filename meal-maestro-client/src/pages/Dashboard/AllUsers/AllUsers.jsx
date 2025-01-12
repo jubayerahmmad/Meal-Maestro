@@ -3,6 +3,8 @@ import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import { MdDelete } from "react-icons/md";
 import { FaUser } from "react-icons/fa6";
 import Swal from "sweetalert2";
+import { Helmet } from "react-helmet-async";
+import SectionTitle from "../../../components/SectiontTtle/SectionTitle";
 
 const AllUsers = () => {
   const axiosSecure = useAxiosSecure();
@@ -75,6 +77,13 @@ const AllUsers = () => {
 
   return (
     <div>
+      <Helmet>
+        <title>Admin Dashboard</title>
+      </Helmet>
+      <SectionTitle
+        heading="All Users"
+        subHeading="Manage Users"
+      ></SectionTitle>
       <div className="overflow-x-auto">
         <table className="table">
           {/* head */}

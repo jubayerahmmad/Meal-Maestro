@@ -69,14 +69,16 @@ const Navbar = () => {
           </ul>
         </div>
         <div className="navbar-end gap-2 items-center">
-          <Link to="dashboard/cart" className="rounded-full relative mx-2">
-            <button>
-              <FaShoppingCart size={36}></FaShoppingCart>
-            </button>
-            <span className="badge badge-secondary badge-sm absolute -right-2 -top-1">
-              {cart.length}
-            </span>
-          </Link>
+          {!isAdmin && (
+            <Link to="dashboard/cart" className="rounded-full relative mx-2">
+              <button>
+                <FaShoppingCart size={36}></FaShoppingCart>
+              </button>
+              <span className="badge badge-secondary badge-sm absolute -right-2 -top-1">
+                {cart.length}
+              </span>
+            </Link>
+          )}
           {user ? (
             <>
               <div className="dropdown dropdown-end">

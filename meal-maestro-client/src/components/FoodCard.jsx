@@ -54,10 +54,10 @@ const FoodCard = ({ item }) => {
   return (
     <div className="card bg-base-100 shadow-xl">
       <figure>
-        <img className="w-full" src={image} alt="food" />
+        <img className="w-full h-56 object-cover" src={image} alt="food" />
       </figure>
       <p className="bg-black text-white absolute right-2 top-2 px-4 rounded-xl">
-        {price}
+        ${price}
       </p>
       <div className="p-6 text-center space-y-3">
         <h2 className="text-2xl mb-2 font-bold">{name}</h2>

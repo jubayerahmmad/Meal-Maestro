@@ -13,7 +13,7 @@ const MainLayout = () => {
           <Outlet></Outlet>
         </div>
         <Footer></Footer>
-      </div>{" "}
+      </div>
     </Suspense>
   );
 };

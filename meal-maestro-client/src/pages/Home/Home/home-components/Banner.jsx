@@ -10,23 +10,23 @@ const Banner = () => {
   return (
     <div>
       <Carousel infiniteLoop={true} autoPlay={true} interval={3200}>
-        <div>
-          <img src={img1} />
+        <div className="xl:h-[750px]">
+          <img className="object-cover" src={img1} />
         </div>
-        <div>
-          <img src={img2} />
+        <div className="xl:h-[750px]">
+          <img className="object-cover" src={img2} />
         </div>
-        <div>
-          <img src={img3} />
+        <div className="xl:h-[750px]">
+          <img className="object-cover" src={img3} />
         </div>
-        <div>
-          <img src={img4} />
+        <div className="xl:h-[750px]">
+          <img className="object-cover" src={img4} />
         </div>
-        <div>
-          <img src={img5} />
+        <div className="xl:h-[750px]">
+          <img className="object-cover" src={img5} />
         </div>
-        <div>
-          <img src={img6} />
+        <div className="xl:h-[750px]">
+          <img className="object-cover" src={img6} />
         </div>
       </Carousel>
     </div>
