@@ -106,7 +106,7 @@ const Register = () => {
             <input
               type="email"
               {...register("email", { required: true })}
-              placeholder="zenuilibrary@gmail.com"
+              placeholder="Email"
               className="py-2 px-3 border border-orange-200 rounded-md w-full focus:outline-none mt-1 focus:border-orange-600"
             />
             {errors.email && (

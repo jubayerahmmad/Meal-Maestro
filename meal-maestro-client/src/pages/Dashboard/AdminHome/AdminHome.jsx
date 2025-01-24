@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import useAuth from "../../../hooks/useAuth";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
-import { FaDollarSign, FaList, FaUsers } from "react-icons/fa6";
+import { FaDollarSign, FaUsers } from "react-icons/fa6";
 import { FaListAlt } from "react-icons/fa";
 import { BsMenuAppFill } from "react-icons/bs";
 import {
@@ -94,7 +94,7 @@ const AdminHome = () => {
 
   const { users, orders, menuItems, revenue } = stats;
   return (
-    <div>
+    <div className="max-w-7xl mx-auto">
       <Helmet>
         <title>Admin Dashboard</title>
       </Helmet>
@@ -102,7 +102,7 @@ const AdminHome = () => {
         Hi, Welcome Back {user?.displayName && user?.displayName}!
       </h2>
 
-      <div className="stats stats-vertical lg:stats-horizontal shadow w-full my-6">
+      <div className="stats stats-vertical lg:stats-horizontal bg-gradient-to-br from-gray-50 via-gray-200 to-gray-400 shadow w-full my-6">
         <div className="stat space-y-4">
           <div className="stat-title text-xl">Users</div>
           <div className="stat-value flex items-center gap-3">

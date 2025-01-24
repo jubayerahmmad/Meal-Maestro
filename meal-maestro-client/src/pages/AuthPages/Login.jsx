@@ -71,7 +71,7 @@ const Login = () => {
               type="email"
               name="email"
               id="email"
-              placeholder="zenuilibrary@gmail.com"
+              placeholder="Email"
               className="py-2 px-3 border border-[#d1d1d1] rounded-md w-full focus:outline-none mt-1 focus:border-[#3B9DF8]"
             />
           </div>
@@ -116,6 +116,7 @@ const Login = () => {
 
           <button
             type="submit"
+            disabled={disableLogin}
             className={`py-2 px-4 w-full rounded-md ${
               disableLogin
                 ? "bg-gray-100 text-gray-600"

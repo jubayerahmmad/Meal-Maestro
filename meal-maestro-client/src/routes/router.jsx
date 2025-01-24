@@ -1,9 +1,9 @@
 // import React from "react";
-// import MainLayout from "../Layouts/MainLayout";
+import MainLayout from "../Layouts/MainLayout";
 // import Home from "../pages/Home/Home/Home";
-// import Menu from "../pages/Menu/Menu";
-// import Order from "../pages/Order/Order";
-import { lazy } from "react";
+import Menu from "../pages/Menu/Menu";
+import Order from "../pages/Order/Order";
+// import { lazy } from "react";
 import { createBrowserRouter } from "react-router-dom";
 import Login from "../pages/AuthPages/Login";
 import Register from "../pages/AuthPages/Register";
@@ -19,10 +19,11 @@ import Payment from "../pages/Dashboard/Payment/Payment";
 import PaymentHistory from "../pages/Dashboard/PaymentHistory/PaymentHistory";
 import UserHome from "../pages/Dashboard/UserHome/UserHome";
 import AdminHome from "../pages/Dashboard/AdminHome/AdminHome";
-const MainLayout = lazy(() => import("../Layouts/MainLayout"));
-const Home = lazy(() => import("../pages/Home/Home/Home"));
-const Menu = lazy(() => import("../pages/Menu/Menu"));
-const Order = lazy(() => import("../pages/Order/Order"));
+import Home from "../pages/Home/Home/Home";
+// const MainLayout = lazy(() => import("../Layouts/MainLayout"));
+// const Home = lazy(() => import("../pages/Home/Home/Home"));
+// const Menu = lazy(() => import("../pages/Menu/Menu"));
+// const Order = lazy(() => import("../pages/Order/Order"));
 
 export const router = createBrowserRouter([
   {
@@ -35,11 +36,7 @@ export const router = createBrowserRouter([
       },
       {
         path: "/menu",
-        element: (
-          <PrivateRoute>
-            <Menu></Menu>
-          </PrivateRoute>
-        ),
+        element: <Menu></Menu>,
       },
       {
         path: "/order/:category",
@@ -104,9 +101,7 @@ export const router = createBrowserRouter([
           </AdminRoute>
         ),
         loader: ({ params }) =>
-          fetch(
-            `https://bistro-boss-server-alpha.vercel.app/menuItem/${params.id}`
-          ),
+          fetch(`http://localhost:5000/menuItem/${params.id}`),
       },
 
       // Users Route

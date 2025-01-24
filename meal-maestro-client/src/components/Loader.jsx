@@ -1,14 +1,12 @@
-import React from "react";
-
 const Loader = () => {
   const sharedStyle = {
     content: "",
     width: "100%",
     height: "100%",
     display: "block",
-    border: "5.6px solid #3B9DF8",
+    border: "5.6px solid purple",
     borderRadius: "50%",
-    boxShadow: "0 -33.6px 0 -5.6px #3B9DF8",
+    boxShadow: "0 -33.6px 0 -5.6px rebeccapurple",
     position: "absolute",
     animation: "spinner-rotate 1.25s infinite ease",
   };
@@ -33,7 +31,7 @@ const Loader = () => {
           {`
           @keyframes spinner-b4c8mmmd {
             from {
-              box-shadow: 0 0 0 -5.6px #474bff;
+              box-shadow: 0 0 0 -5.6px purple;
             }
           }
 

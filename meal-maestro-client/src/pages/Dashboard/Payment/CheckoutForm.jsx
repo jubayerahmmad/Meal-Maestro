@@ -93,27 +93,36 @@ const CheckoutForm = () => {
       }
     }
   };
+  const CARD_OPTIONS = {
+    iconStyle: "solid",
+    style: {
+      base: {
+        iconColor: "#c4f0ff",
+        color: "#fff",
+        fontWeight: 500,
+        fontFamily: "Roboto, Open Sans, Segoe UI, sans-serif",
+        fontSize: "16px",
+        fontSmoothing: "antialiased",
+        ":-webkit-autofill": {
+          color: "#fce883",
+        },
+        "::placeholder": {
+          color: "#87bbfd",
+        },
+      },
+      invalid: {
+        iconColor: "#ffc7ee",
+        color: "#ffc7ee",
+      },
+    },
+  };
+
   return (
-    <div>
+    <div className="">
       <form onSubmit={handleSubmit}>
-        <CardElement
-          options={{
-            style: {
-              base: {
-                fontSize: "16px",
-                color: "#424770",
-                "::placeholder": {
-                  color: "#aab7c4",
-                },
-              },
-              invalid: {
-                color: "#9e2146",
-              },
-            },
-          }}
-        />
+        <CardElement options={CARD_OPTIONS} />
         <button
-          className="btn btn-sm btn-warning"
+          className="btn btn-sm my-6 btn-warning"
           type="submit"
           disabled={!stripe || !clientSecret}
         >
@@ -121,7 +130,7 @@ const CheckoutForm = () => {
         </button>
         <div className="flex justify-between">
           <p className="text-red-600 font-bold">{error}</p>
-          <p>Transaction ID: {transactionId}</p>
+          {transactionId && <p>Transaction ID: {transactionId}</p>}
         </div>
       </form>
     </div>
